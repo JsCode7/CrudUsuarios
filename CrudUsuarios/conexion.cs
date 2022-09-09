@@ -98,15 +98,19 @@ public class Conexion
         try
         {
             cmd = new SqlCommand("select * from usuarios where rut = " + Rut, cn);
-            cmd.ExecuteNonQuery(); //Sentencia que ejecuta el comando
+            cmd.ExecuteNonQuery(); //Sentencia que ejecuta la consulta
 
-            dr = cmd.ExecuteReader();
-            if (dr.Read())
+            dr = cmd.ExecuteReader(); // Con esto lee la consulta que se hizo arriba
+            if (dr.Read()) //Si es que encuentra alguna cosa
             {
+                // Ejecuta este metodo, que es para traer los datos consultados de cada columna de la tabla
+                // a cada caja de texto del programa, en escencia el método es: 
+                // DatosConsultados(ElRutQueEncuentraEnLaBD, ElNombre, Apellido)
                 DatosConsultados(GetTxtRutConsultado(), GetTxtNombreConsultado(), GetTxtApellidoConsultado());
             }
             else
             {
+                // Si no, muestra el error de que no existe ese rut
                 MessageBox.Show("No existe el rut ingresado en la bd");
             }
 
@@ -118,31 +122,35 @@ public class Conexion
         return salida;
     }
 
+    public void DatosConsultados(string txtRutConsultado, string txtNombreConsultado, string txtApellidoConsultado)
+    {
+        //Este método es para pasar los datos de rut, nombre y apellido hacia los campos de texto
+    }
+
     public string GetTxtRutConsultado()
     {
-        return dr["rut"].ToString();
+        // Esto es para traer los datos desde la bd aqui depende de los nombres de las columnas
+        return dr["rut"].ToString(); 
     }
 
     public string GetTxtNombreConsultado()
     {
+        // Esto es para traer los datos desde la bd aqui depende de los nombres de las columnas
         return dr["nombre"].ToString();
     }
 
     public string GetTxtApellidoConsultado()
     {
+        // Esto es para traer los datos desde la bd aqui depende de los nombres de las columnas
         return dr["apellido"].ToString();
     }
-
-    public void DatosConsultados(string txtRutConsultado, string txtNombreConsultado, string txtApellidoConsultado)
-    {
-    }
-
 
     public string ModificarUsuario(string Rut, string Nombre, string Apellido)
     {
         string salida = "Se registró el usuario exitosamente";
         try
         {
+
             cmd = new SqlCommand("update usuarios set rut='" + Rut.ToString() +
                 "', nombre='" + Nombre.ToString() + "', apellido='" + Apellido.ToString() +
                 "' where rut ='" + Rut.ToString() + "'", cn);
@@ -160,19 +168,19 @@ public class Conexion
     {
         
         cmd = new SqlCommand("select * from usuarioLogin where usuario = '" + Usuario + "' and contrasena = '" + Pass + "'", cn);
-        cmd.ExecuteNonQuery(); //Sentencia que ejecuta el comando
+        cmd.ExecuteNonQuery(); //Sentencia que ejecuta la consulta
         
-        dr = cmd.ExecuteReader();
-        if (dr.Read() == true)
+        dr = cmd.ExecuteReader(); // Con esto se ejecuta la lectura de la consulta
+        if (dr.Read() == true) //Si la lectura encuentra alguna fila con información
         {
-        MessageBox.Show("Porfin");
-            return true;
+        MessageBox.Show("Porfin"); //Muestra este mensaje 
+            return true; //Y devuelve VERDADERO hacia el FORM2
         }
         else
         {
-            MessageBox.Show("No existe el rut ingresado en la bd");
-            cn.Close();
-            return false;
+            MessageBox.Show("No existe el rut ingresado en la bd");// Si no, muestra este msj
+            cn.Close(); // Cierra la conexion con la bd
+            return false; // Devuelve FALSO hacia el FORM2
         }
         
     }

@@ -19,23 +19,25 @@ namespace CrudUsuarios
         
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string Usuario = txtUsuarioLogin.Text.ToString();
-            string Pass = txtPassLogin.Text.ToString();
-            Conexion inst7 = new Conexion();
+            string Usuario = txtUsuarioLogin.Text.ToString(); //Con esto agarra el texto y los mete en variable
+            string Pass = txtPassLogin.Text.ToString(); // Esto agarra la pass y la guarda en variable
+            Conexion inst7 = new Conexion(); //Se abre una conexion a la bd
 
-            bool validacion = inst7.ValidarLogin(Usuario, Pass);
+            bool validacion = inst7.ValidarLogin(Usuario, Pass); //Aqui se pasa el metodo a la conexion, y se valida
+                                                                 // Aqui se devuelve el VERDADERO o FALSO de la 
+                                                                 // conexion.cs ValidarLogin(Usuario, Pass)
             Hide();
 
-            if (validacion == true) {
-                Form1 formHome = new Form1();
-                formHome.Show();
+            if (validacion == true) { //Si es que la Validacion es VERDADERA, o sea, que se ingresó bien el 
+                                     //usuario y la contraseña, entonces se abre el FORM1
+                Form1 formHome = new Form1();// Aqui se inicializa el FORM1
+                formHome.Show(); // Aqui se muestra el FORM1
             }
             else
             {
-                Close();
+                Close(); // Si no, se cierra todo el programa
             }
             
-
         }
     }
 }
