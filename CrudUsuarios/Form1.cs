@@ -15,23 +15,24 @@ namespace CrudUsuarios
         public Form1()
         {
             InitializeComponent();
+            
         }
 
         private void cargaDatosAutomatica(object sender, EventArgs e)
         {
-            conexion inst1 = new conexion(); //instancia de la clase conexión, llama automaticamente al constructor
+            Conexion inst1 = new Conexion(); //instancia de la clase conexión, llama automaticamente al constructor
             inst1.cargarUsuario(dvUsuario);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            conexion inst2 = new conexion();
+            Conexion inst2 = new Conexion();
             inst2.cargarUsuario(dvUsuario);
         }
 
         private void btnInsertar_Click(object sender, EventArgs e)
         {
-            conexion inst3 = new conexion();
+            Conexion inst3 = new Conexion();
             MessageBox.Show(inst3.insertarUsuario(txtRut.Text, txtNombre.Text, txtApellido.Text));
             inst3.cargarUsuario(dvUsuario); //mostrar el datagrid al insertar
         }
@@ -48,10 +49,6 @@ namespace CrudUsuarios
             limpiar();
         }
 
-
-
-
-
         private void dvUsuario_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -64,14 +61,14 @@ namespace CrudUsuarios
 
         private void button3_Click(object sender, EventArgs e)
         {
-            conexion inst4 = new conexion();
+            Conexion inst4 = new Conexion();
             MessageBox.Show(inst4.eliminarUsuario(txtRut.Text));
             inst4.cargarUsuario(dvUsuario); //cargar el grid al momento de eliminar
         }
 
         private void btnTraer_Click(object sender, EventArgs e)
         {
-            conexion inst5 = new conexion();
+            Conexion inst5 = new Conexion();
             MessageBox.Show(inst5.traerUsuario(txtRut.Text));
             
             txtRut.Text = inst5.GetTxtRutConsultado();
@@ -81,9 +78,14 @@ namespace CrudUsuarios
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            conexion inst6 = new conexion();
+            Conexion inst6 = new Conexion();
             MessageBox.Show(inst6.ModificarUsuario(txtRut.Text, txtNombre.Text, txtApellido.Text));
             inst6.cargarUsuario(dvUsuario); //mostrar el datagrid al updatear
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 
 
-class conexion
+public class Conexion
 {
-    SqlConnection cn; // Variable que nos permite crear la conexion
     SqlCommand cmd; // Variable que nos servirá para poder hacer el crud
     SqlDataReader dr; // Variable que usaremos en el update
     SqlDataAdapter adaptador; // Variable que usaremos en este proyecto para adaptar al grid
     DataSet ds;
+    SqlConnection cn; // Variable que nos permite crear la conexion
 
     // Constructor, se llama igual que la clase y no retorna valor
-    public conexion()
+    public Conexion()
     {
         try
         {
@@ -40,7 +41,6 @@ class conexion
         {
             salida = ("No se insertó: " + ex.ToString());
         }
-
         return salida;
     }
 
@@ -137,12 +137,15 @@ class conexion
     {
     }
 
+
     public string ModificarUsuario(string Rut, string Nombre, string Apellido)
     {
         string salida = "Se registró el usuario exitosamente";
         try
         {
-            cmd = new SqlCommand("update usuarios set rut='" + Rut.ToString() + "', nombre='" + Nombre.ToString() + "', apellido='" + Apellido.ToString() + "' where rut ='" + Rut.ToString() + "'", cn);
+            cmd = new SqlCommand("update usuarios set rut='" + Rut.ToString() +
+                "', nombre='" + Nombre.ToString() + "', apellido='" + Apellido.ToString() +
+                "' where rut ='" + Rut.ToString() + "'", cn);
             cmd.ExecuteNonQuery(); //Sentencia que ejecuta el comando
         }
         catch (Exception ex)
@@ -152,4 +155,28 @@ class conexion
 
         return salida;
     }
+
+    public bool ValidarLogin(string Usuario, string Pass)
+    {
+        
+        cmd = new SqlCommand("select * from usuarioLogin where usuario = '" + Usuario + "' and contrasena = '" + Pass + "'", cn);
+        cmd.ExecuteNonQuery(); //Sentencia que ejecuta el comando
+        
+        dr = cmd.ExecuteReader();
+        if (dr.Read() == true)
+        {
+        MessageBox.Show("Porfin");
+            return true;
+        }
+        else
+        {
+            MessageBox.Show("No existe el rut ingresado en la bd");
+            cn.Close();
+            return false;
+        }
+        
+    }
+
+
+
 }
